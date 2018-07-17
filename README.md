@@ -1,5 +1,5 @@
 # drop-down-multi-value-manager
-Tool to keep a drop-down multi-value field in Agile Central consistent with values in a text file.
+Tools to dump and keep a drop-down multi-value field in Agile Central consistent with values in a text file.
 If the values have a "key" portion of the value (e.g. "1234 My Value") then the app will update
 any values that start with same string (e.g. "1234 My NEW Value").
 
@@ -17,4 +17,9 @@ from `requirements.txt`)
 3. Edit `config/desired_values.txt` to the values you want to use. One value per line
 4. (optional) Edit `config/logging.json` to control logging output and location. Default is to a file
 and the console.
+
+## Dump current values
+1. `python DumpCurrentValues.py config/config.json`
+
+## Update current values with file
 5. `python ValueManager.py config/config.json config/desired_values.txt`

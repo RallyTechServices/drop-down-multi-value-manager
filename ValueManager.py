@@ -16,9 +16,6 @@ class ValueManager:
     
     def run(self, element_name, attribute_name, desired_values_filename):
         desired_value_names = self.load_desired_values(desired_values_filename)
-
-        #allowed_value = self.rally.getAllowedValues('PortfolioItem','AppID')
-        #logger.info(allowed_values)
         
         response = self.rally.get('TypeDefinition', fetch=True, query='ElementName = "{0}"'.format(element_name))
         if response.errors:
