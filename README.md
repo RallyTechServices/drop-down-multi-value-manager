@@ -7,6 +7,9 @@ Run first with `"preview": true` to see the changes that will occur. Preview mod
 in Agile Central.
 
 ## Usage
+1. Setup Python and install dependencies (`pyral` is the only actual dependency which pulls in the others
+from `requirements.txt`)
+    * `pip install -r requirements.txt`
 1. Setup environment variables
     * `RALLY_USER=user@company.com`
     * `APIKEY=_12345689...`
