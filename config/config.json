@@ -1,0 +1,9 @@
+{
+    "preview": true,
+    "server": "rally1.rallydev.com",
+    "workspace": "Tyr",
+    "project": "Default",
+    "element_name": "PortfolioItem",
+    "attribute_name": "App ID",
+    "values_have_key": true
+}
