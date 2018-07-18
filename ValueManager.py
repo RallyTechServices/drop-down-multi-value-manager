@@ -5,6 +5,7 @@ from pyral import Rally, rallyWorkset
 
 class ValueManager:
     preview = True
+    desired_value_index = {}
     
     def __init__(self, rally, preview = True, values_have_key=False):
         self.rally = rally
@@ -30,15 +31,13 @@ class ValueManager:
         # Get the AllowedValue objects
         allowed_values = attribute.AllowedValues
 
+        # First determine the values that will be modified
         values_to_modify = self.values_to_modify(allowed_values, desired_value_names)
         old_new_values = [(value.LocalizedStringValue, desired_value) for (value, desired_value) in values_to_modify]
-        logger.info("Values to modify: %s", len(values_to_modify))
-        for (value, desired_name) in values_to_modify:
-            self.modify_value(value, desired_name)
-        
         allowed_names_to_modify = [old for (old, new) in old_new_values]
         new_names_to_modify = [new for (old, new) in old_new_values]
         
+        # Next remove items so that their ValueIndex doesn't collied with values we will add or modify 
         value_objects_to_remove = self.value_objects_to_remove(allowed_values, desired_value_names)
         # Filter out any that we plan to modify
         value_objects_to_remove = [value for value in value_objects_to_remove if value.LocalizedStringValue not in allowed_names_to_modify]
@@ -46,6 +45,12 @@ class ValueManager:
         for value in value_objects_to_remove:
             self.remove_value(value)
     
+        # Now, modify existing values
+        logger.info("Values to modify: %s", len(values_to_modify))
+        for (value, desired_name) in values_to_modify:
+            self.modify_value(value, desired_name)
+        
+        # Finally add new values
         names_to_add = self.value_names_to_add(allowed_values, desired_value_names)
         # Filter out any that we plan to modify
         names_to_add = [name for name in names_to_add if name not in new_names_to_modify]
@@ -57,10 +62,15 @@ class ValueManager:
     
     def load_desired_values(self, filename):
         desired_values = []
+        value_index = 1
         with open(filename, "r") as file:
             for line in file:
                 line = line.strip()
                 desired_values.append(line)
+                # Build a dict of value name to index so that we can ensure the updated attribute values
+                # have the same order as they appear in the desired name file
+                self.desired_value_index[line] = value_index
+                value_index += 1
         return desired_values
         
     def value_objects_to_remove(self, allowed_values, desired_value_names):
@@ -117,7 +127,8 @@ class ValueManager:
         if not self.preview:
             self.rally.post('AllowedAttributeValue', {
                 "ObjectID": value.ObjectID,
-                "StringValue": desired_name
+                "StringValue": desired_name,
+                "ValueIndex": self.desired_value_index[desired_name]
             })
         return
     
@@ -126,7 +137,8 @@ class ValueManager:
         if not self.preview:
             self.rally.create('AllowedAttributeValue', {
                 "StringValue": name,
-                "AttributeDefinition": '/attributedefinition/{0}'.format(attribute_definition_objectid)
+                "AttributeDefinition": '/attributedefinition/{0}'.format(attribute_definition_objectid),
+                "ValueIndex": self.desired_value_index[name]
             })
         return
 

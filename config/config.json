@@ -1,5 +1,5 @@
 {
-    "preview": true,
+    "preview": false,
     "server": "rally1.rallydev.com",
     "workspace": "Tyr",
     "project": "Default",

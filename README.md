@@ -2,6 +2,7 @@
 Tools to dump and keep a drop-down multi-value field in Agile Central consistent with values in a text file.
 If the values have a "key" portion of the value (e.g. "1234 My Value") then the app will update
 any values that start with same string (e.g. "1234 My NEW Value").
+Values are kept in order they appear in the desired values text file.
 
 Run first with `"preview": true` to see the changes that will occur. Preview mode does not make changes
 in Agile Central.
