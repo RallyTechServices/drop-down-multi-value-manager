@@ -24,7 +24,7 @@ class DumpCurrentValues:
         allowed_values = attribute.AllowedValues
         
         for value in allowed_values:
-            print(value.StringValue, value.ValueIndex)
+            print(value.StringValue)
 
 if __name__ == "__main__":
     config_filename = sys.argv[1]
