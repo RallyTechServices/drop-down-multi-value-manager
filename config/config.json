@@ -1,9 +1,9 @@
 {
     "preview": true,
     "server": "rally1.rallydev.com",
-    "workspace": "Tyr",
-    "project": "Default",
-    "element_name": "PortfolioItem",
-    "attribute_name": "App ID",
+    "workspace": "zJPKole-RSDC-WS-test-source",
+    "project": "JPs Sample Project in SheriSub",
+    "element_name": "Defect",
+    "attribute_name": "aa-jp-test1",
     "values_have_key": true
 }

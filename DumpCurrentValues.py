@@ -27,6 +27,11 @@ class DumpCurrentValues:
             print(value.StringValue)
 
 if __name__ == "__main__":
+    if ( len(sys.argv) != 2 ):
+        print("ERROR: Command requires one (and only one) argument.")
+        print("USAGE:  python  DumpCurrentValues.py  config/config.json")
+        sys.exit(-1)
+
     config_filename = sys.argv[1]
     
     with open(config_filename, "r") as config_file:
@@ -38,4 +43,4 @@ if __name__ == "__main__":
 
     manager = DumpCurrentValues(rally)
     manager.run(config['element_name'], config['attribute_name'])
-        
+
